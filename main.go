@@ -3,46 +3,61 @@ package main
 import (
 	"fmt"
 
-	"github.com/dobau/golearn/outropacote"
+	"github.com/dobau/golearn/user"
 )
 
 func main() {
-	var x int = 1
-	y := 2
+	user1 := user.User{}
 
-	fmt.Println("TESTE")
-	fmt.Printf("x + y = %d\n", (x + y))
-
-	var even = make([]int, 0, 10)
-	odd := []int{}
-	for i := 0; i < 10; i += 1 {
-		if i%2 == 0 {
-			even = append(even, i)
-		} else {
-			odd = append(odd, i)
-		}
-
+	user2 := user.User{
+		Name: "Rafael",
 	}
 
-	fmt.Printf("even = %v\n", even)
-	fmt.Printf("even = %+v\n", odd)
+	user3 := user.User{123, "Rafael", true}
 
-	outropacote.FuncaoPublica()
+	fmt.Printf("user1 = %v\n", user1)
+	fmt.Printf("user2 = %v\n", user2)
+	fmt.Printf("user3 = %+v\n", user3)
 
-	Loop1()
-}
+	user.User{}.Metodo1()
+	//user.User{}.Metodo2()
+	user4 := &user.User{}
+	user4.Metodo1()
+	user4.Metodo2()
 
-func Loop1() {
+	service := user.NewUserService()
 
-	slice1 := []string{"a", "b"}
-	slice2 := make([]string, 2)
-	array1 := [2]string{"a", "b"}
-	array2 := [2]string{"a", "b"}
+	err := service.Validate(user1)
+	if err != nil {
+		fmt.Println("Erro ao validar user1")
+	}
 
-	slice2[0], slice2[1] = "a", "b"
+	err = service.Validate(user2)
+	if err != nil {
+		fmt.Println("Erro ao validar user2")
+	}
 
-	for i := range slice1 {
-		fmt.Printf("[%d] slice1(%s) slice2(%s) array1(%s) array2(%s)\n",
-			i, slice1[i], slice2[i], array1[i], array2[i])
+	if createErr := service.Create(&user2); createErr != nil {
+		fmt.Println("Erro ao criar user2")
+	}
+	fmt.Printf("user2 criado = %v\n", user2)
+
+	users := []user.User{
+		{
+			ID:   1,
+			Name: "Marcos",
+		},
+		{
+			ID:   2,
+			Name: "Carlos",
+		},
+		{
+			ID:   3,
+			Name: "Pedro",
+		},
+	}
+
+	for _, user := range users {
+		fmt.Println(user)
 	}
 }
