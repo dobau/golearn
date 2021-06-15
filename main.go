@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/dobau/golearn/outropacote"
 )
 
 func main() {
@@ -24,4 +26,23 @@ func main() {
 
 	fmt.Printf("even = %v\n", even)
 	fmt.Printf("even = %+v\n", odd)
+
+	outropacote.FuncaoPublica()
+
+	Loop1()
+}
+
+func Loop1() {
+
+	slice1 := []string{"a", "b"}
+	slice2 := make([]string, 2)
+	array1 := [2]string{"a", "b"}
+	array2 := [2]string{"a", "b"}
+
+	slice2[0], slice2[1] = "a", "b"
+
+	for i := range slice1 {
+		fmt.Printf("[%d] slice1(%s) slice2(%s) array1(%s) array2(%s)\n",
+			i, slice1[i], slice2[i], array1[i], array2[i])
+	}
 }
